@@ -3,12 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 // middleware
 app.use(cors());
 app.use(express.json());
-// u4tHRQgHoEpvU6wA??maplecodetree_db_user
 
 const admin = require("firebase-admin");
 
@@ -19,6 +18,7 @@ const serviceAccount = JSON.parse(decoded);
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
+
 
 
 const verifyFirebaseToken = async (req, res, next) => {
@@ -44,7 +44,6 @@ const verifyFirebaseToken = async (req, res, next) => {
         return res.status(401).send({ message: 'Unauthorized access' });
     }
 };
-
 
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.dwmxail.mongodb.net/?appName=Cluster0`;
 
@@ -212,14 +211,18 @@ async function run() {
 
 run().catch(console.dir)
 
-// connect to port
-app.listen(port, () => {
-    console.log(`smart server is running on port: ${port}`)
-})
+// connect to PORT
+// app.listen(PORT, () => {
+//     console.log(`smart server is running on PORT: ${PORT}`)
+// })
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+});
 
 // 2nd method to connect to mongodb
 // client.connect().then(() => {
-//     app.listen(port, () => {
-//         console.log(`smart server is running now now now on port: ${port}`)
+//     app.listen(PORT, () => {
+//         console.log(`smart server is running now now now on PORT: ${PORT}`)
 //     })
 // }).catch(console.dir) 
